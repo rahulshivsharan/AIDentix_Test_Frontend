@@ -1,6 +1,7 @@
 'use strict';
 
 import React, {useEffect, useState, Fragment} from "react";
+import FileUpload from './fileUpload.jsx';
 
 export default function UserComponent(){
 	const [userList, setUserList] = useState([]);
@@ -51,8 +52,7 @@ export default function UserComponent(){
 				setLoading(false);
 				$('#myModal').modal('hide');				
 			},
-			"error" : function(error){					
-				console.log(error.responseJSON["error"]);
+			"error" : function(error){	
 				setError(error.responseJSON["error"]);
 				setLoading(false);
 				$('#myModal').modal('hide');
@@ -69,46 +69,54 @@ export default function UserComponent(){
     				setError(null);
     			}}>Close</button>
     		</div>)}
-			
-			<button type="button" className="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-  				Launch demo modal
+
+			<FileUpload setError={setError} 
+						setLoading={setLoading} 
+						setUserList={setUserList} />
+			&nbsp;&nbsp;
+			<button type="button" className="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" onClick={()=>{
+					$("#usernameId").val("");
+			        $("#passwordId").val("");
+			}}>
+  				Create User
 			</button>
 			
 			<div className="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-			  <div className="modal-dialog" role="document">
-			    <div className="modal-content">
-			      
-			      <div className="modal-header">
-			        <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			        <h4 className="modal-title" id="myModalLabel">Modal title</h4>
-			      </div>
-			      
-			      <div className="modal-body">
-				        <form>
-				        	<div className="form-group">
-	    						<label for="usernameId">User name</label>
-	   	 						<input type="text" className="form-control" id="usernameId" placeholder="user name" />
-	  						</div>
+				<div className="modal-dialog" role="document">
+					<div className="modal-content">
+					      
+					    <div className="modal-header">
+					        <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					        <h4 className="modal-title" id="myModalLabel">Modal title</h4>
+					    </div>
+					      
+					    <div className="modal-body">
+						    <form>
+						        	<div className="form-group">
+			    						<label for="usernameId">User name</label>
+			   	 						<input type="text" className="form-control" id="usernameId" placeholder="user name" />
+			  						</div>
 
-	  						<div className="form-group">
-	    						<label for="passwordId">Password</label>
-	   	 						<input type="password" className="form-control" id="passwordId" placeholder="password" />
-	  						</div>
-				        </form>
-			      </div>
-			        			      
-			      <div className="modal-footer">
-			        <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
-			        <button type="button" className="btn btn-primary" onClick={()=>{
-			        	const username = $("#usernameId").val();
-			        	const password = $("#passwordId").val();
-			        	handleClick(username, password);
-			        }}>Save changes</button>
-			      </div>
+			  						<div className="form-group">
+			    						<label for="passwordId">Password</label>
+			   	 						<input type="password" className="form-control" id="passwordId" placeholder="password" />
+			  						</div>
+						    </form>
+					    </div>
+					        			      
+					    <div className="modal-footer">
+					        <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
+					        <button type="button" className="btn btn-primary" onClick={()=>{
+					        	const username = $("#usernameId").val();
+					        	const password = $("#passwordId").val();
+					        	handleClick(username, password);
+					        }}>Save changes</button>
+					    </div>
 
-			    </div>
-			  </div>
+					</div>
+				</div>
 			</div>
+
 			<br/>
 			<br/>
 			<table className="table table-bordered">
